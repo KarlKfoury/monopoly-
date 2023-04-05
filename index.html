@@ -1,5 +1,3 @@
-theme: minima
-
 <html>
 <head>
 <style>
@@ -11,6 +9,7 @@ position: relative;
 border: 1px solid black;
 background-size: 100px;
 background-position: center;
+;
 }
 
 .show {
@@ -211,11 +210,56 @@ margin-left: 1100px;
 margin-top: 80px;
 }
 
+#ven {
+top: 0px;
+left: 0px;
+}
+
 #center {
 position: absolute;
-top: 475px;
-left: 400px;
+top: 256px;
+left: 194px;
+width: 730px;
+height: 725px;
+background: yellow;
+}
+
+#namecenter {
+position: relative;
+top: 40%;
+left: 25%;
+height: 10%;
 font-size: 40px;
+}
+
+#whosturn {
+position: relative;
+top: 50%;
+left: 25%;
+height: 10%;
+font-size: 20px;
+}
+
+#dice1{
+position: relative;
+top: 60%;
+left: 30%;
+height: 10%;
+width: 10%;
+background-size: 86px;
+background-position: center;
+background-image: url('image/1.png');
+}
+
+#dice2 {
+position: relative;
+top: 50%;
+left: 60%;
+height: 10%;
+width: 10%;
+background-size: 86px;
+background-position: center;
+background-image: url('image/1.png');
 }
 
 #b1 {
@@ -247,8 +291,13 @@ transform: rotate(270deg)
 </style>
 </head>
 <body id="body">
-<div id="whosturn">player 1</div>
-<div id="center"></div>
+<div id="ven"></div>
+<div id="center">
+<div id="namecenter"></div>
+<div id="whosturn">TURN: player 1</div>
+<div id="dice1"></div>
+<div id="dice2"></div>
+</div>
 <table class="ro" id="b1">
 <tr>
 <td id="a9" class="case propr conave lightblue"></td>
@@ -462,8 +511,8 @@ a39.hn = 0
 alert("RULES: \n enter the number of players and each player enters a password that he'll use to make any purchase \n throw the dice with D and open the trade market with T")
   
 Array.from(document.getElementsByClassName("case")).forEach((item) => {
-item.addEventListener("mouseover", function(){document.getElementById("center").innerHTML = item.label})
-item.addEventListener("mouseout", function(){document.getElementById("center").innerHTML = " "})
+item.addEventListener("mouseover", function(){document.getElementById("namecenter").innerHTML = item.label})
+item.addEventListener("mouseout", function(){document.getElementById("namecenter").innerHTML = " "})
 })
 var showe = "no" 
 var x = []
@@ -479,8 +528,9 @@ var chance = [["advance to illinois avenue", "!24"], ["advance to st charles pla
 //
 //["pay 45$ for each of your houses and 115$ for each hotel", "p2y"]
 function start() {
-var np = parseInt(window.prompt("number of players:"))
+var np = parseInt(window.prompt("number of players (5 max):"))
 colors = ["red", "green", "blue", "magenta", "black", "cyan", "yellow", "orange"]
+if (np < 6) {
 for (let i = 0; i < np; i++) {
 var noo = document.createElement("div")
 noo.className = "piece"
@@ -498,7 +548,12 @@ body.appendChild(cash)
 passcodes.push(window.prompt( "player " + (i + 1) + " passcode:"))
 } 
 }
+else {
 start()
+}
+}
+start()
+
 var turn = 0
 window.addEventListener("keydown", function(e){
 if (e.key == "d"){
@@ -514,7 +569,7 @@ function platf() {
 if (showe == "no") {
 white = document.createElement("table")
 white.className = "show"
-center.innerHTML = ""
+ven.innerHTML = ""
 showe = "yes"
 coloor = "lightblue"
 Array.from(document.getElementsByClassName("propr")).forEach((item) => {
@@ -644,6 +699,7 @@ window["c" + turn] -= aa
 document.getElementById("d" + turn).innerHTML = "player " + (turn + 1) + " cash: " + (window["c" + turn]) +"$"
 item.owner = turn
 showe = "no"
+ven.innerHTML = ""
 platf()
 }
 })
@@ -655,10 +711,10 @@ tt.appendChild(td3)
 tt.appendChild(td5)
 white.appendChild(tt)
 })
-center.appendChild(white)
+ven.appendChild(white)
 }
 else {
-center.innerHTML = ""
+ven.innerHTML = ""
 showe = "no"
 }
 }
@@ -718,12 +774,10 @@ window["c" + item] += 50
 document.getElementById("d" + item).innerHTML = "player " + (item + 1) + " cash: " + (window["c" + item]) +"$"
 }
 })
-
 turn++
 if (turn > x.length - 1) {
 turn -= x.length
 }
-whosturn.innerHTML = "player " + (turn + 1)
 }
 
 if (y[1][0] == "!") {
@@ -774,8 +828,8 @@ offer(document.getElementById("a" + x[turn]), di1, di2)
 function dice(){
 var di1 = Math.ceil(Math.random()*6)
 var di2 = Math.ceil(Math.random()*6)
-alert(di1)
-alert(di2)
+dice1.style.backgroundImage = "url('image/" + di1  +".png')"
+dice2.style.backgroundImage = "url('image/" + di2 + ".png')"
 if (jaile.includes("c" + turn) != true) {
 x[turn] = di1 + di2 + x[turn]
 if (x[turn] > 39) {
@@ -816,6 +870,7 @@ x.splice(ind)
 })
 }
 }
+whosturn.innerHTML = "TURN: player " + (turn + 1)
 }
 
 function offer(z, di1, di2) {
@@ -889,3 +944,4 @@ document.getElementById("d" + turn).innerHTML = "player " + (turn + 1) + " cash:
 </script>
 </body>
 </html>
+
