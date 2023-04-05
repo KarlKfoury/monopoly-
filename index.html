@@ -828,6 +828,7 @@ offer(document.getElementById("a" + x[turn]), di1, di2)
 function dice(){
 var di1 = Math.ceil(Math.random()*6)
 var di2 = Math.ceil(Math.random()*6)
+alert("dice 1: " + di1 + "/ndice 2: " + di2)
 dice1.style.backgroundImage = "url('image/" + di1  +".png')"
 dice2.style.backgroundImage = "url('image/" + di2 + ".png')"
 if (jaile.includes("c" + turn) != true) {
